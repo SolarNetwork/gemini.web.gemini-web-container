@@ -4,10 +4,10 @@ Bundle-SymbolicName: org.eclipse.gemini.web.tomcat
 Bundle-Version: 1
 Import-Template: org.eclipse.gemini.web.*;version="1.0",
  org.eclipse.virgo.util.*;version="2.0",
- org.apache.catalina.*;version="6.0.29.S2-r1559",
- org.apache.juli.*;version="6.0.29.S2-r1559",
- org.apache.naming.*;version="6.0.29.S2-r1559",
- org.apache.tomcat.*;version="6.0.29.S2-r1559",
+ org.apache.catalina.*;version="6.0.32.S2-r1673",
+ org.apache.juli.*;version="6.0.32.S2-r1673",
+ org.apache.naming.*;version="6.0.32.S2-r1673",
+ org.apache.tomcat.*;version="6.0.32.S2-r1673",
  org.springframework.osgi.*;version="1.2.0",
  org.osgi.framework.*;version="0",
  org.osgi.util.tracker.*;version="1.4.0",
@@ -26,7 +26,7 @@ Import-Template: org.eclipse.gemini.web.*;version="1.0",
  javax.xml.transform.*;version="0",
  javax.xml.validation.*;version="0",
  org.w3c.dom.*;version="0"
-Import-Package: org.apache.catalina.deploy;version="6.0.29.S2-r1559",
- org.apache.catalina.session;version="6.0.29.S2-r1559"
+Import-Package: org.apache.catalina.deploy;version="6.0.32.S2-r1673",
+ org.apache.catalina.session;version="6.0.32.S2-r1673"
 Bundle-Activator: org.eclipse.gemini.web.tomcat.internal.Activator
 Excluded-Exports: *.internal.*,javax.*
