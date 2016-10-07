@@ -166,7 +166,18 @@ public final class BundleEntry {
         }
 
         if (path.endsWith(PATH_SEPARATOR) || path.length() == 0) {
-            return this.bundle.getEntry(path);
+            URL url = this.bundle.getEntry(path);
+            if (url == null) {
+                // try fragments
+                for (int i = 0; i < this.fragments.size(); i++) {
+                    Bundle b = this.fragments.get(i);
+                    url = b.getEntry(path);
+                    if (url != null) {
+                        break;
+                    }
+                }
+            }
+            return url;
         }
 
         String searchPath;
