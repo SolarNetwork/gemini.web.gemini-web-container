@@ -16,7 +16,9 @@
         <artifact name="${ant.project.name}-sources" type="src" ext="jar"/>
     </publications>
 
+
     <dependencies>
+        <dependency org="javax.servlet" name="javax.servlet" rev="${javax.servlet}" conf="compile->runtime"/>
     </dependencies>
 
 </ivy-module>

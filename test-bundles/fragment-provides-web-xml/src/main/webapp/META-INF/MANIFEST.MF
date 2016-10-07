@@ -1,6 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: fragment-provides-web-xml
+Bundle-ClassPath: WEB-INF/classes/
+Import-Package: javax.servlet,
+ javax.servlet.annotation,
+ javax.servlet.http
 Fragment-Host: war-with-web-xml-from-fragment;bundle-version=1.0.0
 Bundle-Version: 1.0.0
 Bundle-Description: Fragment that provides web.xml

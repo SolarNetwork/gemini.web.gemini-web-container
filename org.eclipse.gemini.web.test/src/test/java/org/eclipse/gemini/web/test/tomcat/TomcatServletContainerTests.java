@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2014 VMware Inc.
+ * Copyright (c) 2009, 2016 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -486,6 +486,7 @@ public class TomcatServletContainerTests {
         Object[] result = startWebApplicationWith(LOCATION_WAR_WITH_WEB_XML_FROM_FRAGMENT, "/war-with-web-xml-from-fragment");
         try {
             validateURL("http://localhost:8080/war-with-web-xml-from-fragment");
+            validateURL("http://localhost:8080/war-with-web-xml-from-fragment/NewPackageServlet");
         } finally {
             this.container.stopWebApplication((WebApplicationHandle) result[1]);
             ((Bundle) result[0]).uninstall();
