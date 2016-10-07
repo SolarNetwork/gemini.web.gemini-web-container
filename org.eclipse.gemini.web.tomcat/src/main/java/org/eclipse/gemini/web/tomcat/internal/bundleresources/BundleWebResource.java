@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 SAP SE
+ * Copyright (c) 2015, 2016 SAP SE
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -182,7 +182,18 @@ final class BundleWebResource extends AbstractResource {
         }
 
         if (path.endsWith(PATH_SEPARATOR) || path.length() == 0) {
-            return this.bundle.getEntry(path);
+            URL url = this.bundle.getEntry(path);
+            if (url == null) {
+                // try fragments
+                for (int i = 0; i < this.fragments.size(); i++) {
+                    Bundle b = this.fragments.get(i);
+                    url = b.getEntry(path);
+                    if (url != null) {
+                        break;
+                    }
+                }
+            }
+            return url;
         }
 
         String searchPath;
