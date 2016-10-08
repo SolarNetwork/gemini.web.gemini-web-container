@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2015 VMware Inc.
+ * Copyright (c) 2009, 2016 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,21 +18,21 @@ package org.eclipse.gemini.web.tomcat.internal;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
 import org.apache.jasper.servlet.JasperInitializer;
+import org.apache.tomcat.Jar;
 import org.apache.tomcat.JarScanFilter;
 import org.apache.tomcat.JarScanType;
 import org.apache.tomcat.JarScanner;
 import org.apache.tomcat.JarScannerCallback;
+import org.apache.tomcat.util.scan.JarFactory;
 import org.apache.tomcat.websocket.server.WsSci;
 import org.eclipse.gemini.web.tomcat.internal.loader.BundleWebappClassLoader;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleDependencyDeterminer;
@@ -172,14 +172,12 @@ final class BundleDependenciesJarScanner implements JarScanner {
     }
 
     private void scanBundleUrl(URL url, JarScannerCallback callback, boolean isWebapp) {
-        try {
-            URLConnection connection = url.openConnection();
-
-            if (connection instanceof JarURLConnection) {
-                callback.scan((JarURLConnection) connection, null, isWebapp);
+        if ("jar".equals(url.getProtocol()) || url.getPath().endsWith(".jar")) {
+            try (Jar jar = JarFactory.newInstance(url)) {
+                callback.scan(jar, null, isWebapp);
+            } catch (IOException e) {
+                LOGGER.warn("Failure when attempting to scan bundle via jar URL [" + url + "].", e);
             }
-        } catch (IOException e) {
-            LOGGER.warn("Failure when attempting to scan bundle via jar URL [" + url + "].", e);
         }
     }
 }

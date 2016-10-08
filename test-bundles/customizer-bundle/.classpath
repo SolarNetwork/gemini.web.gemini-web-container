@@ -3,8 +3,9 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.gemini.web.tomcat"/>
-	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.0.18/org.apache.tomcat.api-8.0.18.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.0.18/org.apache.tomcat.api.source-8.0.18.jar"/>
+	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.5.5/org.apache.tomcat.api-8.5.5.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.5.5/org.apache.tomcat.api.source-8.5.5.jar"/>
+	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.util.scan/8.5.5/org.apache.tomcat.util.scan-8.5.5.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.util.scan/8.5.5/org.apache.tomcat.util.scan.source-8.5.5.jar"/>
 	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.eclipse.osgi/3.10.0.v20140606-1445/org.eclipse.osgi-3.10.0.v20140606-1445.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.eclipse.osgi/3.10.0.v20140606-1445/org.eclipse.osgi.source-3.10.0.v20140606-1445.jar"/>
-	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0/javax.servlet-3.1.0.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0/javax.servlet-sources-3.1.0.jar"/>
+	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0.20150414/javax.servlet-3.1.0.20150414.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0.20150414/javax.servlet-sources-3.1.0.20150414.jar"/>
 	<classpathentry kind="output" path="target"/>
 </classpath>

@@ -19,6 +19,7 @@ package org.eclipse.gemini.web.tomcat.internal.bundleresources;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,6 +38,7 @@ import java.util.jar.Manifest;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.webresources.AbstractResource;
 import org.apache.juli.logging.Log;
+import org.apache.tomcat.util.buf.UriUtil;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleFileResolver;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleFileResolverFactory;
 import org.osgi.framework.Bundle;
@@ -250,6 +252,14 @@ final class BundleWebResource extends AbstractResource {
     public URL getURL() {
         if (this.url == null) {
             this.url = getEntryFromBundle(this.path);
+        }
+        String urlStr = this.url.toString();
+        if (urlStr.endsWith(".jar")) {
+            try {
+                this.url = UriUtil.buildJarUrl(urlStr);
+            } catch (MalformedURLException e) {
+                throw new IllegalArgumentException(e);
+            }
         }
         return this.url;
     }

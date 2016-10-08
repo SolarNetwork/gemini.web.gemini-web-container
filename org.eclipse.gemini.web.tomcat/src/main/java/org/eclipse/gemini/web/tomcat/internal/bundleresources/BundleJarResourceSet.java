@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 SAP SE
+ * Copyright (c) 2015, 2016 SAP SE
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +19,7 @@ package org.eclipse.gemini.web.tomcat.internal.bundleresources;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -51,11 +52,6 @@ final class BundleJarResourceSet extends JarResourceSet {
         }
 
         try (JarInputStream jarIs = new JarInputStream(conn.getInputStream())) {
-            JarEntry entry = jarIs.getNextJarEntry();
-            while (entry != null) {
-                getJarFileEntries().put(entry.getName(), entry);
-                entry = jarIs.getNextJarEntry();
-            }
             setManifest(jarIs.getManifest());
         } catch (IOException ioe) {
             throw new IllegalArgumentException(ioe);
@@ -63,4 +59,60 @@ final class BundleJarResourceSet extends JarResourceSet {
 
         setBaseUrl(baseUrl);
     }
+
+    @Override
+    protected HashMap<String,JarEntry> getArchiveEntries(boolean single) {
+        synchronized (archiveLock) {
+            if (archiveEntries == null && !single) {
+                URLConnection conn = null;
+                URL baseUrl = null;
+                try {
+                    baseUrl = new URL(getBase());
+                    conn = baseUrl.openConnection();
+                } catch (IOException e) {
+                    throw new IllegalArgumentException(e);
+                }
+
+                archiveEntries = new HashMap<>();
+                try (JarInputStream jarIs = new JarInputStream(conn.getInputStream())) {
+                    JarEntry entry = jarIs.getNextJarEntry();
+                    while (entry != null) {
+                        archiveEntries.put(entry.getName(), entry);
+                        entry = jarIs.getNextJarEntry();
+                    }
+                } catch (IOException ioe) {
+                    // Should never happen
+                    archiveEntries = null;
+                    throw new IllegalStateException(ioe);
+                }
+            }
+            return archiveEntries;
+        }
+    }
+
+    @Override
+    protected JarEntry getArchiveEntry(String pathInArchive) {
+        URLConnection conn = null;
+        URL baseUrl = null;
+        try {
+            baseUrl = new URL(getBase());
+            conn = baseUrl.openConnection();
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
+
+        JarEntry entry = null;
+        try (JarInputStream jarIs = new JarInputStream(conn.getInputStream())) {
+            entry = jarIs.getNextJarEntry();
+            while (entry != null && !entry.getName().equals(pathInArchive)) {
+                entry = jarIs.getNextJarEntry();
+            }
+
+            return entry;
+        } catch (IOException ioe) {
+            // Should never happen
+            throw new IllegalStateException(ioe);
+        }
+    }
+
 }

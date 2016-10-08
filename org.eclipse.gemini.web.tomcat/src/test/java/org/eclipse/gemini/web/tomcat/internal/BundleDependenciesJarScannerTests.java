@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2015 VMware Inc.
+ * Copyright (c) 2009, 2016 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,7 +27,6 @@ import static org.easymock.EasyMock.verify;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.JarURLConnection;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,6 +34,7 @@ import java.util.HashSet;
 
 import javax.servlet.ServletContext;
 
+import org.apache.tomcat.Jar;
 import org.apache.tomcat.JarScannerCallback;
 import org.eclipse.gemini.web.tomcat.internal.loader.BundleWebappClassLoader;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleDependencyDeterminer;
@@ -106,9 +106,9 @@ public class BundleDependenciesJarScannerTests {
     public void scanFile() throws IOException {
         expect(this.dependencyDeterminer.getDependencies(this.bundle)).andReturn(new HashSet<>(Arrays.asList(this.dependency)));
 
-        File dependencyFile = new File("");
+        File dependencyFile = new File("./src/test/resources/bundle.jar");
         expect(this.bundleFileResolver.resolve(this.dependency)).andReturn(dependencyFile);
-        this.callback.scan(isA(JarURLConnection.class), (String) isNull(), eq(true));
+        this.callback.scan(isA(Jar.class), (String) isNull(), eq(true));
 
         ClassLoader classLoader = new BundleWebappClassLoader(this.bundle, this.classLoaderCustomizer);
         expect(this.servletContext.getClassLoader()).andReturn(classLoader);
@@ -125,12 +125,12 @@ public class BundleDependenciesJarScannerTests {
     @Test
     public void scanJarUrlConnection() throws IOException {
         expect(this.dependencyDeterminer.getDependencies(this.bundle)).andReturn(new HashSet<>(Arrays.asList(this.dependency))).times(2);
-        expect(this.dependency.getLocation()).andReturn("file:src/test/resources/bundle.jar").andReturn(
-            "reference:file:src/test/resources/bundle.jar");
+        String bundleLocation = new File("./src/test/resources/bundle.jar").toURI().toString();
+        expect(this.dependency.getLocation()).andReturn(bundleLocation).andReturn("reference:" + bundleLocation);
         expect(this.dependency.getSymbolicName()).andReturn("bundle").anyTimes();
 
         expect(this.bundleFileResolver.resolve(this.dependency)).andReturn(null).times(2);
-        this.callback.scan(isA(JarURLConnection.class), (String) isNull(), eq(true));
+        this.callback.scan(isA(Jar.class), (String) isNull(), eq(true));
 
         ClassLoader classLoader = new BundleWebappClassLoader(this.bundle, this.classLoaderCustomizer);
         expect(this.servletContext.getClassLoader()).andReturn(classLoader).times(2);
