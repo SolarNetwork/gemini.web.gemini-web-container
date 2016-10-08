@@ -39,6 +39,7 @@
 		<dependency org="org.eclipse.virgo.mirrored" name="javax.el" rev="${javax.el}" conf="dep->runtime"/>
 		<dependency org="org.eclipse.virgo.mirrored" name="javax.mail" rev="${javax.mail}" conf="dep->runtime"/>
 		<dependency org="org.eclipse.virgo.mirrored" name="javax.persistence" rev="${javax.persistence}" conf="dep->runtime"/>
+		<dependency org="org.eclipse.virgo.mirrored" name="javax.security.auth.message" rev="${javax.security.auth.message}" conf="dep->runtime"/>
 		<dependency org="org.eclipse.virgo.mirrored" name="javax.servlet" rev="${javax.servlet}" conf="dep->runtime"/>
 		<dependency org="org.eclipse.virgo.mirrored" name="javax.servlet.jsp" rev="${javax.servlet.jsp}" conf="dep->runtime"/>
 		<dependency org="org.eclipse.virgo.mirrored" name="javax.transaction" rev="${javax.transaction}" conf="dep->runtime"/>
