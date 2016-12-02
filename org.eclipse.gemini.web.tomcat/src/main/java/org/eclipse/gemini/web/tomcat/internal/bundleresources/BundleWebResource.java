@@ -19,8 +19,10 @@ package org.eclipse.gemini.web.tomcat.internal.bundleresources;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.cert.Certificate;
@@ -409,7 +411,16 @@ final class BundleWebResource extends AbstractResource {
     @Override
     protected InputStream doGetInputStream() {
         try {
-            return getURL().openStream();
+            URL url = getURL();
+            if ("jar".equals(url.getProtocol()) || url.getPath().endsWith(".jar")) {
+                JarURLConnection jarConn = (JarURLConnection) url.openConnection();
+                URL jarURL = jarConn.getJarFileURL();
+                URLConnection conn = jarURL.openConnection();
+                conn.setUseCaches(false);
+                return conn.getInputStream();
+            } else {
+                return url.openStream();
+            }
         } catch (IOException e) {
             return null;
         }

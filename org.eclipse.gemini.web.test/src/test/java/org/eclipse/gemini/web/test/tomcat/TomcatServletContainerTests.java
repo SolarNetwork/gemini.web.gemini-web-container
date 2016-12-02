@@ -172,7 +172,8 @@ public class TomcatServletContainerTests {
             validateURLExpectedContent("http://localhost:8080/war-with-servlet/", new String[] { "path info: /", "servlet path: ", "context path: " });
             validateURLExpectedContent("http://localhost:8080/war-with-servlet/alabala", new String[] { "path info: null", "servlet path: /alabala",
                 "context path: /war-with-servlet" });
-            validateURLExpectedContent("http://localhost:8080/war-with-servlet/test.jsp", new String[] { "Found resources 2" });
+            validateURLExpectedContent("http://localhost:8080/war-with-servlet/test.jsp",
+                new String[] { "Found resources 2", "Found input sources 3" });
         } finally {
             this.container.stopWebApplication((WebApplicationHandle) result[1]);
             ((Bundle) result[0]).uninstall();

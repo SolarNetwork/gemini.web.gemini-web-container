@@ -15,6 +15,19 @@
     i++;
   }
   out.println("Found resources " + i);
+
+  int j = 0;
+  if (config.getServletContext().getResourceAsStream("/test.jsp") != null) {
+      j++;
+  }
+  if (config.getServletContext().getResourceAsStream("/WEB-INF/lib/resource.jar") != null) {
+      j++;
+  }
+  if (config.getServletContext().getResourceAsStream("WEB-INF/lib/resource.jar") != null) {
+      j++;
+  }
+  out.println("Found input sources " + j);
 %>
+
 </body>
 </html>
