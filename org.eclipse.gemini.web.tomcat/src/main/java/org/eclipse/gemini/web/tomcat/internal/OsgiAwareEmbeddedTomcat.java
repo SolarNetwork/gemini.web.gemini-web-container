@@ -173,9 +173,9 @@ public final class OsgiAwareEmbeddedTomcat extends Tomcat {
         Server server = getServer();
         Service[] findServices = server.findServices();
         for (Service service : findServices) {
-            Container container = service.getContainer();
-            if (container instanceof Engine) {
-                return (Engine) container;
+            Engine container = service.getContainer();
+            if (container != null) {
+                return container;
             }
         }
         throw new IllegalStateException("Unable to locate Engine.");
