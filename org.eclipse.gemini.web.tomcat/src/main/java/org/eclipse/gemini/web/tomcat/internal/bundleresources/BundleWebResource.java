@@ -403,7 +403,7 @@ final class BundleWebResource extends AbstractResource {
 
     @Override
     public boolean isFile() {
-        return !getURL().getFile().endsWith(PATH_SEPARATOR);
+        return !isDirectory();
     }
 
     @Override
