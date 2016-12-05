@@ -27,6 +27,15 @@
       j++;
   }
   out.println("Found input sources " + j);
+
+  int k = 0;
+  Set<String> resourcePaths = config.getServletContext().getResourcePaths("/WEB-INF/lib");
+  for (String resource : resourcePaths) {
+      if (config.getServletContext().getResourceAsStream(resource) != null) {
+          k++;
+      }
+  }
+  out.println("Found resource paths " + k);
 %>
 
 </body>

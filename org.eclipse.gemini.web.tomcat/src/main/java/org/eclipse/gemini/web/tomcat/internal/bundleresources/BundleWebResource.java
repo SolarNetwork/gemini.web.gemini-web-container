@@ -396,7 +396,9 @@ final class BundleWebResource extends AbstractResource {
 
     @Override
     public boolean isDirectory() {
-        return getURL().getFile().endsWith(PATH_SEPARATOR);
+        URL url = getURL();
+        return url.getFile().endsWith(PATH_SEPARATOR) &&
+            !"jar".equals(url.getProtocol());
     }
 
     @Override
