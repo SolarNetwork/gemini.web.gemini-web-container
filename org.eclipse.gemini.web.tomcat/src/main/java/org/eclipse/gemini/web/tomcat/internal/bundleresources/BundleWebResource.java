@@ -254,13 +254,14 @@ final class BundleWebResource extends AbstractResource {
     public URL getURL() {
         if (this.url == null) {
             this.url = getEntryFromBundle(this.path);
-        }
-        String urlStr = this.url.toString();
-        if (urlStr.endsWith(".jar")) {
-            try {
-                this.url = UriUtil.buildJarUrl(urlStr);
-            } catch (MalformedURLException e) {
-                throw new IllegalArgumentException(e);
+
+            String urlStr = this.url.toString();
+            if (urlStr.endsWith(".jar")) {
+                try {
+                    this.url = UriUtil.buildJarUrl(urlStr);
+                } catch (MalformedURLException e) {
+                    throw new IllegalArgumentException(e);
+                }
             }
         }
         return this.url;
