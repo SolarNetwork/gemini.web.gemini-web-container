@@ -394,4 +394,8 @@ public class BundleWebappClassLoader extends URLClassLoader implements Lifecycle
     public void setClearReferencesHttpClientKeepAliveThread(boolean clearReferencesHttpClientKeepAliveThread) {
         // no-op
     }
+
+    public void setClearReferencesRmiTargets(boolean clearReferencesRmiTargets) {
+        // no-op
+    }
 }
