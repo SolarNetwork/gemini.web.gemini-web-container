@@ -5,3 +5,6 @@ integration-repo
 *.iws
 *.ipr
 user-ivy.properties
+.metadata/
+.recommenders/
+*.project
