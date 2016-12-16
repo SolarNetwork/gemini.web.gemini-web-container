@@ -5,6 +5,7 @@
 		<pathelement location="../org.eclipse.gemini.web.core"/>
 		<pathelement location="../org.eclipse.gemini.web.tomcat"/>
 		<pathelement location="../org.eclipse.gemini.web.extender"/>
+		<pathelement location="../org.eclipse.gemini.web.jaspic.fragment"/>
 	</path>
 	
 	<path id="bundles">

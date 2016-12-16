@@ -1,0 +1,6 @@
+Bundle-ManifestVersion: 2
+Bundle-Name: Gemini Web JASPIC Fragment
+Bundle-SymbolicName: org.eclipse.gemini.web.jaspic.fragment
+Bundle-Version: $version
+Fragment-Host: javax.security.auth.message
+Import-Package: org.apache.catalina.authenticator.jaspic;version="${org.apache.catalina:[=.=.=, =.+1)}"

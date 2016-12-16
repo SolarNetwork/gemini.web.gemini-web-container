@@ -13,6 +13,7 @@
 		<dependency org="${project.organisation}" name="org.eclipse.gemini.web.core" rev="latest.integration" conf="package->runtime"/>
 		<dependency org="${project.organisation}" name="org.eclipse.gemini.web.tomcat" rev="latest.integration" conf="package->runtime"/>
 		<dependency org="${project.organisation}" name="org.eclipse.gemini.web.extender" rev="latest.integration" conf="package->runtime"/>
+		<dependency org="${project.organisation}" name="org.eclipse.gemini.web.jaspic.fragment" rev="latest.integration" conf="package->runtime"/>
 	</dependencies>
 
 </ivy-module>

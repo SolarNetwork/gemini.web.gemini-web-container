@@ -23,6 +23,8 @@
 
 			<plugin id="org.eclipse.gemini.web.core" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
+			<plugin id="org.eclipse.gemini.web.jaspic.fragment" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
 			<xsl:for-each select="ivy-module/dependencies/dependency">
 				<plugin>
 					<xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute>
