@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 SAP SE
+ * Copyright (c) 2015, 2016 SAP SE
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,10 +17,12 @@
 package org.eclipse.gemini.web.tomcat.internal.bundleresources;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.Permission;
 
-import org.apache.catalina.webresources.WarURLStreamHandler;
 import org.osgi.service.url.AbstractURLStreamHandlerService;
 
 public class BundleURLStreamHandlerService extends AbstractURLStreamHandlerService {
@@ -31,28 +33,52 @@ public class BundleURLStreamHandlerService extends AbstractURLStreamHandlerServi
 
     private static final String WAR_TO_ENTRY_SEPARATOR_NEW = "\\*/";
 
-    private final ExtendedWarURLStreamHandler handler = new ExtendedWarURLStreamHandler();
-
     @Override
     public URLConnection openConnection(URL u) throws IOException {
-        return new URL(null, u.toExternalForm(), this.handler).openConnection();
+        return new BundleURLConnection(u);
     }
 
-    private static class ExtendedWarURLStreamHandler extends WarURLStreamHandler {
+    private static class BundleURLConnection extends URLConnection {
+
+        private final URLConnection wrappedUrlConnection;
+        private boolean connected = false;
+
+        BundleURLConnection(URL url) throws IOException {
+            super(url);
+            this.wrappedUrlConnection = warToBundle(url).openConnection();
+        }
 
         @Override
-        protected void parseURL(URL u, String spec, int start, int limit) {
-            // Only the path needs to be changed
-            if (spec.startsWith(WAR_BUNDLE_ENTRY_SCHEMA)) {
-                String path = spec.substring(4);
+        public void connect() throws IOException {
+            if (!connected) {
+                this.wrappedUrlConnection.connect();
+                this.connected = true;
+            }
+        }
+
+        @Override
+        public InputStream getInputStream() throws IOException {
+            connect();
+            return this.wrappedUrlConnection.getInputStream();
+        }
+
+        @Override
+        public Permission getPermission() throws IOException {
+            return this.wrappedUrlConnection.getPermission();
+        }
+
+        private URL warToBundle(URL u) throws MalformedURLException {
+            String url = u.toExternalForm();
+            if (url.startsWith(WAR_BUNDLE_ENTRY_SCHEMA)) {
+                String path = url.substring(4);
                 if (path.contains("*/")) {
                     path = path.replaceFirst(WAR_TO_ENTRY_SEPARATOR_NEW, "");
                 } else {
                     path = path.replaceFirst(WAR_TO_ENTRY_SEPARATOR, "");
                 }
-                setURL(u, u.getProtocol(), "", -1, null, null, path, null, null);
+                return new URL(path);
             } else {
-                super.parseURL(u, spec, start, limit);
+                return u;
             }
         }
 
