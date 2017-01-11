@@ -27,6 +27,7 @@ import static org.easymock.EasyMock.verify;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Collections;
@@ -124,20 +125,18 @@ public class BundleDependenciesJarScannerTests {
 
     @Test
     public void scanJarUrlConnection() throws IOException {
-        expect(this.dependencyDeterminer.getDependencies(this.bundle)).andReturn(new HashSet<>(Arrays.asList(this.dependency))).times(2);
-        String bundleLocation = new File("./src/test/resources/bundle.jar").toURI().toString();
-        expect(this.dependency.getLocation()).andReturn(bundleLocation).andReturn("reference:" + bundleLocation);
-        expect(this.dependency.getSymbolicName()).andReturn("bundle").anyTimes();
+        expect(this.dependencyDeterminer.getDependencies(this.bundle)).andReturn(new HashSet<>(Arrays.asList(this.dependency)));
+        URL bundleLocation = new File("./src/test/resources/bundle.jar").toURI().toURL();
+        expect(this.dependency.getEntry("/")).andReturn(bundleLocation);
+        expect(this.dependency.getSymbolicName()).andReturn("bundle");
 
-        expect(this.bundleFileResolver.resolve(this.dependency)).andReturn(null).times(2);
+        expect(this.bundleFileResolver.resolve(this.dependency)).andReturn(null);
         this.callback.scan(isA(Jar.class), (String) isNull(), eq(true));
 
         ClassLoader classLoader = new BundleWebappClassLoader(this.bundle, this.classLoaderCustomizer);
-        expect(this.servletContext.getClassLoader()).andReturn(classLoader).times(2);
+        expect(this.servletContext.getClassLoader()).andReturn(classLoader);
 
         replay(this.dependencyDeterminer, this.bundleFileResolver, this.callback, this.dependency, this.servletContext);
-
-        this.scanner.scan(null, this.servletContext, this.callback);
 
         this.scanner.scan(null, this.servletContext, this.callback);
 
