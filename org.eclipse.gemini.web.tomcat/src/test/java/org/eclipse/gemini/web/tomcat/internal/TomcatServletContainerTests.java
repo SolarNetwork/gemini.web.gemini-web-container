@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2015 SAP SE
+ * Copyright (c) 2012, 2017 SAP SE
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,12 +37,15 @@ import org.eclipse.gemini.web.core.spi.ContextPathExistsException;
 import org.eclipse.gemini.web.core.spi.ServletContainerException;
 import org.eclipse.gemini.web.core.spi.WebApplicationHandle;
 import org.eclipse.gemini.web.tomcat.internal.loader.BundleWebappLoader;
+import org.eclipse.osgi.service.urlconversion.URLConverter;
+import org.eclipse.virgo.test.stubs.framework.StubFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
+import org.osgi.util.tracker.ServiceTracker;
 
 public class TomcatServletContainerTests {
 
@@ -72,6 +75,8 @@ public class TomcatServletContainerTests {
 
     private WebApplicationHandle webApplicationHandle;
 
+    private ServiceTracker<URLConverter, URLConverter> converter;
+
     @Before
     public void setUp() throws Exception {
         this.bundleContext = createMock(BundleContext.class);
@@ -83,6 +88,7 @@ public class TomcatServletContainerTests {
         this.host = createMock(Host.class);
         this.servletContext = createMock(ServletContext.class);
         this.webApplicationHandle = createMock(WebApplicationHandle.class);
+        this.converter = new ServiceTracker<>(this.bundleContext, createMock(StubFilter.class), null);
 
         expect(this.bundleContext.createFilter(FILTER_1)).andReturn(this.filter);
         expect(this.bundleContext.createFilter(FILTER_2)).andReturn(this.filter);
@@ -195,7 +201,7 @@ public class TomcatServletContainerTests {
     private TomcatServletContainer createTomcatServletContainer() {
         replay(this.bundleContext, this.bundle, this.filter, this.server, this.service, this.engine, this.host, this.servletContext,
             this.webApplicationHandle);
-        OsgiAwareEmbeddedTomcat osgiAwareEmbeddedTomcat = new OsgiAwareEmbeddedTomcat(this.bundleContext);
+        OsgiAwareEmbeddedTomcat osgiAwareEmbeddedTomcat = new OsgiAwareEmbeddedTomcat(this.bundleContext, this.converter);
         osgiAwareEmbeddedTomcat.setServer(this.server);
         return new TomcatServletContainer(osgiAwareEmbeddedTomcat, this.bundleContext);
     }

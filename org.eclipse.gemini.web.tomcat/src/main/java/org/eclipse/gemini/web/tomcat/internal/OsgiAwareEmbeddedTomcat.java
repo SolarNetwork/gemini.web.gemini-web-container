@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2016 VMware Inc.
+ * Copyright (c) 2009, 2017 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -56,10 +56,12 @@ import org.eclipse.gemini.web.core.spi.ServletContainerException;
 import org.eclipse.gemini.web.tomcat.internal.loader.ChainedClassLoader;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleFileResolverFactory;
 import org.eclipse.gemini.web.tomcat.internal.support.PackageAdminBundleDependencyDeterminer;
+import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.eclipse.virgo.util.osgi.ServiceRegistrationTracker;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -119,10 +121,11 @@ public final class OsgiAwareEmbeddedTomcat extends Tomcat {
 
     private String hostConfigDir;
 
-    OsgiAwareEmbeddedTomcat(BundleContext context) {
+    OsgiAwareEmbeddedTomcat(BundleContext context,
+            ServiceTracker<URLConverter, URLConverter> urlConverterTracker) {
         this.bundleContext = context;
         this.bundleDependenciesJarScanner = new BundleDependenciesJarScanner(new PackageAdminBundleDependencyDeterminer(),
-            BundleFileResolverFactory.createBundleFileResolver(), context);
+            BundleFileResolverFactory.createBundleFileResolver(), context, urlConverterTracker);
         this.defaultJarScanner = new StandardJarScanner();
         this.jarScannerCustomizer = new DelegatingJarScannerCustomizer(context);
     }

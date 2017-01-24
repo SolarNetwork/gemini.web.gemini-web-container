@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2012 VMware Inc.
+ * Copyright (c) 2009, 2017 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,12 +18,15 @@ package org.eclipse.gemini.web.tomcat.internal;
 
 import java.io.InputStream;
 
+import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
 
 final class TomcatServletContainerFactory {
 
-    public TomcatServletContainer createContainer(InputStream configuration, BundleContext context) {
-        OsgiAwareEmbeddedTomcat catalina = new OsgiAwareEmbeddedTomcat(context);
+    public TomcatServletContainer createContainer(InputStream configuration, BundleContext context,
+            ServiceTracker<URLConverter, URLConverter> urlConverterTracker) {
+        OsgiAwareEmbeddedTomcat catalina = new OsgiAwareEmbeddedTomcat(context, urlConverterTracker);
         catalina.configure(configuration);
 
         return new TomcatServletContainer(catalina, context);
