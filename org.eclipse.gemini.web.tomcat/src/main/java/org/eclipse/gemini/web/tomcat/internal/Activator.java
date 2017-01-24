@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2015 VMware Inc.
+ * Copyright (c) 2009, 2017 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,17 +24,23 @@ import java.util.Hashtable;
 import org.eclipse.gemini.web.core.WebContainerProperties;
 import org.eclipse.gemini.web.core.spi.ServletContainer;
 import org.eclipse.gemini.web.tomcat.internal.bundleresources.BundleURLStreamHandlerService;
+import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.eclipse.virgo.util.osgi.ServiceRegistrationTracker;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
+import org.osgi.util.tracker.ServiceTracker;
 
 public class Activator implements BundleActivator {
 
     private static final String WAR_PROTOCOL = "war";
+
+    private static final String FILTER = "(&(objectClass=" + URLConverter.class.getName()
+            + ")(protocol=bundleentry))";
 
     private static final String EXPRESSION_FACTORY = "javax.el.ExpressionFactory";
 
@@ -46,6 +52,8 @@ public class Activator implements BundleActivator {
 
     private TomcatServletContainer container;
 
+    private ServiceTracker<URLConverter, URLConverter> urlConverterTracker;
+
     private String oldExpressionFactory;
 
     @Override
@@ -54,6 +62,10 @@ public class Activator implements BundleActivator {
 
         registerURLStreamHandler(context);
         registerConnectorDescriptors(context);
+
+        Filter filter = context.createFilter(FILTER);
+        this.urlConverterTracker = new ServiceTracker<>(context, filter, null);
+        this.urlConverterTracker.open();
 
         TomcatServletContainer container = createContainer(context);
         container.start();
@@ -98,6 +110,8 @@ public class Activator implements BundleActivator {
         if (this.oldExpressionFactory != null) {
             System.setProperty(EXPRESSION_FACTORY, this.oldExpressionFactory);
         }
+
+        this.urlConverterTracker.close();
     }
 
     private TomcatServletContainer createContainer(BundleContext context) throws BundleException {
@@ -105,7 +119,7 @@ public class Activator implements BundleActivator {
         InputStream configFile = null;
         try {
             configFile = resolveConfigFile(context);
-            return factory.createContainer(configFile, context);
+            return factory.createContainer(configFile, context, this.urlConverterTracker);
         } finally {
             if (configFile != null) {
                 try {

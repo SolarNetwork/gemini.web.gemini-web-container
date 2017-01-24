@@ -41,10 +41,13 @@ import org.eclipse.gemini.web.tomcat.internal.loader.BundleWebappClassLoader;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleDependencyDeterminer;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleFileResolver;
 import org.eclipse.gemini.web.tomcat.spi.ClassLoaderCustomizer;
+import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.eclipse.virgo.test.stubs.framework.StubBundle;
 import org.eclipse.virgo.test.stubs.framework.StubBundleContext;
+import org.eclipse.virgo.test.stubs.framework.StubFilter;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
+import org.osgi.util.tracker.ServiceTracker;
 
 public class BundleDependenciesJarScannerTests {
 
@@ -54,8 +57,11 @@ public class BundleDependenciesJarScannerTests {
 
     private final StubBundleContext bundleContext = new StubBundleContext();
 
+    private ServiceTracker<URLConverter, URLConverter> converter =
+            new ServiceTracker<>(this.bundleContext, createMock(StubFilter.class), null);
+
     private final BundleDependenciesJarScanner scanner = new BundleDependenciesJarScanner(this.dependencyDeterminer, this.bundleFileResolver,
-        this.bundleContext);
+        this.bundleContext, this.converter);
 
     private final Bundle bundle = new StubBundle();
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2014 SAP AG
+ * Copyright (c) 2011, 2017 SAP AG
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,6 +29,7 @@ import javax.naming.spi.ObjectFactory;
 import javax.naming.spi.ObjectFactoryBuilder;
 
 import org.apache.catalina.LifecycleException;
+import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.eclipse.virgo.test.stubs.framework.StubBundleContext;
 import org.eclipse.virgo.test.stubs.framework.StubFilter;
 import org.eclipse.virgo.test.stubs.framework.StubServiceRegistration;
@@ -36,6 +37,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Constants;
+import org.osgi.util.tracker.ServiceTracker;
 
 public class OsgiAwareEmbeddedTomcatTests {
 
@@ -43,11 +45,14 @@ public class OsgiAwareEmbeddedTomcatTests {
 
     private StubFilter filter;
 
+    private ServiceTracker<URLConverter, URLConverter> converter;
+
     @Before
     public void setUp() {
         this.bundleContext = new StubBundleContext();
         this.filter = createMock(StubFilter.class);
         this.bundleContext.addFilter("(objectClass=org.eclipse.gemini.web.tomcat.spi.JarScannerCustomizer)", this.filter);
+        this.converter = new ServiceTracker<>(this.bundleContext, createMock(StubFilter.class), null);
     }
 
     @After
@@ -116,7 +121,7 @@ public class OsgiAwareEmbeddedTomcatTests {
     }
 
     private OsgiAwareEmbeddedTomcat createTomcat() {
-        return new OsgiAwareEmbeddedTomcat(this.bundleContext);
+        return new OsgiAwareEmbeddedTomcat(this.bundleContext, this.converter);
     }
 
     private void initTomcat() {

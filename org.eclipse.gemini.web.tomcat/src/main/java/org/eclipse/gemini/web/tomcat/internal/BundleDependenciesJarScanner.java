@@ -35,9 +35,11 @@ import org.apache.tomcat.websocket.server.WsSci;
 import org.eclipse.gemini.web.tomcat.internal.loader.BundleWebappClassLoader;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleDependencyDeterminer;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleFileResolver;
+import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,13 +66,16 @@ final class BundleDependenciesJarScanner implements JarScanner {
 
     private final BundleFileResolver bundleFileResolver;
 
+    private final ServiceTracker<URLConverter, URLConverter> urlConverterTracker;
+
     private JarScanFilter jarScanFilter;
 
     BundleDependenciesJarScanner(BundleDependencyDeterminer bundleDependencyDeterminer, BundleFileResolver bundleFileResolver,
-        BundleContext bundleContext) {
+        BundleContext bundleContext, ServiceTracker<URLConverter, URLConverter> urlConverterTracker) {
         this.bundleDependencyDeterminer = bundleDependencyDeterminer;
         this.bundleFileResolver = bundleFileResolver;
         this.jarScanFilter = new BundleDependenciesJarScanFilter(bundleContext);
+        this.urlConverterTracker = urlConverterTracker;
     }
 
     @Override
@@ -117,21 +122,25 @@ final class BundleDependenciesJarScanner implements JarScanner {
         if (bundleFile != null) {
             scanBundleFile(bundleFile, callback, isWebapp);
         } else {
-            scanJarUrlConnection(bundle, callback, isWebapp);
+            URL root = bundle.getEntry("/");
+            try {
+                URLConverter converter = this.urlConverterTracker.getService();
+                if (converter != null) {
+                    root = converter.resolve(root);
+                }
+                if ("file".equals(root.getProtocol())) {
+                    scanBundleFile(new File(root.getPath()), callback, isWebapp);
+                } else if ("jar".equals(root.getProtocol())) {
+                    scanBundleUrl(root, callback, isWebapp);
+                } else {
+                    URL bundleUrl = new URL(JAR_URL_PREFIX + root.toExternalForm() + JAR_URL_SUFFIX);
+                    scanBundleUrl(bundleUrl, callback, isWebapp);
+                }
+            } catch (IOException e) {
+                LOGGER.warn("Failed to scan the bundle location [" + root + "].");
+                return;
+            }
         }
-    }
-
-    private void scanJarUrlConnection(Bundle bundle, JarScannerCallback callback, boolean isWebapp) {
-        URL bundleUrl;
-        URL root = bundle.getEntry("/");
-        try {
-            bundleUrl = new URL(JAR_URL_PREFIX + root.toExternalForm() + JAR_URL_SUFFIX);
-        } catch (MalformedURLException e) {
-            LOGGER.warn("Failed to create jar: url for bundle location [" + root + "].");
-            return;
-        }
-
-        scanBundleUrl(bundleUrl, callback, isWebapp);
     }
 
     private void scanBundleFile(File bundleFile, JarScannerCallback callback, boolean isWebapp) {
