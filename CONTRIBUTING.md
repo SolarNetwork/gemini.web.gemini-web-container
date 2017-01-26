@@ -17,10 +17,17 @@ Information regarding source code management, builds, coding standards, and more
 
 - https://projects.eclipse.org/projects/rt.gemini.web/developer
 
-Contributor License Agreement:
-------------------------------
+Source Code Repositories:
+-------------------------
 
-Before your contribution can be accepted by the project, you need to create and electronically sign the Eclipse Contributor Agreement.
+The project maintains the following source code repositories:
+
+- http://git.eclipse.org/c/gemini.web/org.eclipse.gemini.web.gemini-web-container.git
+
+Contributor Agreement:
+----------------------
+
+Before your contribution can be accepted by the project, you need to create and electronically sign the Eclipse Contributor Agreement (ECA).
 
 - http://www.eclipse.org/legal/ECA.php
 - http://wiki.eclipse.org/Development_Resources/Contributing_via_Git
