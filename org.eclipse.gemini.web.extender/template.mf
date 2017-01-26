@@ -9,5 +9,5 @@ Import-Template: org.eclipse.gemini.web.*;version="${version}",
  org.osgi.util.tracker.*;version="0",
  javax.servlet;version="3.0.0",
  org.slf4j;version="${org.slf4j.api:[=.=.=, =.+1)}"
-
+Bundle-Vendor: Eclipse Gemini Web
 

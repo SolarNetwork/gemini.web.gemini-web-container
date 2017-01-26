@@ -16,3 +16,4 @@ Export-Template: org.osgi.services.webcontainer.*;version="1.0",
 Excluded-Imports: org.eclipse.virgo.util.io.JarTransformer
 Excluded-Exports: org.eclipse.gemini.web.internal
 Bundle-Activator: org.eclipse.gemini.web.internal.WebContainerActivator
+Bundle-Vendor: Eclipse Gemini Web

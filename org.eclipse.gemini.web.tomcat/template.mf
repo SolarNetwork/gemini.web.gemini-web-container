@@ -38,3 +38,4 @@ Import-Package: org.apache.catalina.deploy;version="${org.apache.catalina:[=.=.=
  org.apache.tomcat.util.descriptor.web;version="${org.apache.catalina:[=.=.=, =.+1)}"
 Bundle-Activator: org.eclipse.gemini.web.tomcat.internal.Activator
 Excluded-Exports: *.internal.*,javax.*
+Bundle-Vendor: Eclipse Gemini Web
