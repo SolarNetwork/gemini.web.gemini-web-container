@@ -24,7 +24,6 @@ import java.util.Hashtable;
 import org.eclipse.gemini.web.core.WebContainerProperties;
 import org.eclipse.gemini.web.core.spi.ServletContainer;
 import org.eclipse.gemini.web.tomcat.internal.bundleresources.BundleURLStreamHandlerService;
-import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.eclipse.virgo.util.osgi.ServiceRegistrationTracker;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -39,8 +38,7 @@ public class Activator implements BundleActivator {
 
     private static final String WAR_PROTOCOL = "war";
 
-    private static final String FILTER = "(&(objectClass=" + URLConverter.class.getName()
-            + ")(protocol=bundleentry))";
+    private static final String FILTER = "(&(objectClass=org.eclipse.osgi.service.urlconversion.URLConverter)(protocol=bundleentry))";
 
     private static final String EXPRESSION_FACTORY = "javax.el.ExpressionFactory";
 
@@ -52,7 +50,7 @@ public class Activator implements BundleActivator {
 
     private TomcatServletContainer container;
 
-    private ServiceTracker<URLConverter, URLConverter> urlConverterTracker;
+    private ServiceTracker<?, ?> urlConverterTracker;
 
     private String oldExpressionFactory;
 

@@ -18,14 +18,13 @@ package org.eclipse.gemini.web.tomcat.internal;
 
 import java.io.InputStream;
 
-import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
 final class TomcatServletContainerFactory {
 
     public TomcatServletContainer createContainer(InputStream configuration, BundleContext context,
-            ServiceTracker<URLConverter, URLConverter> urlConverterTracker) {
+            ServiceTracker<?, ?> urlConverterTracker) {
         OsgiAwareEmbeddedTomcat catalina = new OsgiAwareEmbeddedTomcat(context, urlConverterTracker);
         catalina.configure(configuration);
 

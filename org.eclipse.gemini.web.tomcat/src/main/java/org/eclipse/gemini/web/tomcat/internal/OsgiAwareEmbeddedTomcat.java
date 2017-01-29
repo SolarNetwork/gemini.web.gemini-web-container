@@ -56,7 +56,6 @@ import org.eclipse.gemini.web.core.spi.ServletContainerException;
 import org.eclipse.gemini.web.tomcat.internal.loader.ChainedClassLoader;
 import org.eclipse.gemini.web.tomcat.internal.support.BundleFileResolverFactory;
 import org.eclipse.gemini.web.tomcat.internal.support.PackageAdminBundleDependencyDeterminer;
-import org.eclipse.osgi.service.urlconversion.URLConverter;
 import org.eclipse.virgo.util.osgi.ServiceRegistrationTracker;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -121,8 +120,7 @@ public final class OsgiAwareEmbeddedTomcat extends Tomcat {
 
     private String hostConfigDir;
 
-    OsgiAwareEmbeddedTomcat(BundleContext context,
-            ServiceTracker<URLConverter, URLConverter> urlConverterTracker) {
+    OsgiAwareEmbeddedTomcat(BundleContext context, ServiceTracker<?, ?> urlConverterTracker) {
         this.bundleContext = context;
         this.bundleDependenciesJarScanner = new BundleDependenciesJarScanner(new PackageAdminBundleDependencyDeterminer(),
             BundleFileResolverFactory.createBundleFileResolver(), context, urlConverterTracker);
