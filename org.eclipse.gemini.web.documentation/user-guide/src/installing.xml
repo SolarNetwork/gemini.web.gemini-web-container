@@ -14,13 +14,13 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					<ulink url="http://download.eclipse.org/equinox/">Download</ulink> the Equinox JAR, for example <ulink url="http://download.eclipse.org/equinox/drops/R-LunaSR1-201409250400/download.php?dropFile=org.eclipse.osgi_3.10.1.v20140909-1633.jar">org.eclipse.osgi_3.10.1.v20140909-1633.jar</ulink>, and move it to a suitable directory (e.g. ~/gemini-web-test).
+					<ulink url="http://download.eclipse.org/equinox/">Download</ulink> the Equinox JAR, for example <ulink url="http://download.eclipse.org/equinox/drops/R-LunaSR2-201502041700/download.php?dropFile=org.eclipse.osgi_3.10.2.v20150203-1939.jar">org.eclipse.osgi_3.10.2.v20150203-1939.jar</ulink>, and move it to a suitable directory (e.g. ~/gemini-web-test).
 					On the <ulink url="http://download.eclipse.org/equinox/">Download</ulink> page, first choose the desired Release or Build, then download the JAR from the 'Framework Only' section.
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					<ulink url="http://download.eclipse.org/equinox/">Download</ulink> the Equinox Console, for example <ulink url="http://download.eclipse.org/equinox/drops/R-LunaSR1-201409250400/download.php?dropFile=equinox-SDK-LunaSR1.zip">equinox-SDK-LunaSR1.zip</ulink>.
+					<ulink url="http://download.eclipse.org/equinox/">Download</ulink> the Equinox Console, for example <ulink url="http://download.eclipse.org/equinox/drops/R-LunaSR2-201502041700/download.php?dropFile=equinox-SDK-LunaSR2.zip">equinox-SDK-LunaSR2.zip</ulink>.
 					You will need the bundles listed below:
 					<itemizedlist>
 						<listitem>org.apache.felix.gogo.command_0.10.0.v201209301215.jar</listitem>
@@ -41,21 +41,21 @@
 			<listitem>
 				<para>
 					Configure Equinox by creating a directory ~/gemini-web-test/configuration and create a file config.ini in the configuration directory. 
-					Example file which works with 3.0.0.M01 is available in <ulink url="https://wiki.eclipse.org/images/f/f5/Config.ini.3.0.0.M01.zip">config.ini.zip</ulink>.
+					Example file which works with 3.0.0.RELEASE is available in <ulink url="https://wiki.eclipse.org/images/f/f5/Config.ini.3.0.0.M01.zip">config.ini.zip</ulink>.
 					Essentially config.ini ensures that the dependencies of @product.name@, which come in the dep directory, are installed and then the @product.name@ bundles are installed and started. 
 				</para>
 			</listitem>
 			<listitem>
 				<para>
 					Start Equinox as follows:
-					<programlisting language="xml"><![CDATA[java -jar org.eclipse.osgi_3.10.1.v20140909-1633.jar -console]]></programlisting></para>
+					<programlisting language="xml"><![CDATA[java -jar org.eclipse.osgi_3.10.2.v20150203-1939.jar -console]]></programlisting></para>
 			</listitem>
 			<listitem>
 				<para>
 					You can then deploy WAR files (a trivial example is available in <ulink url="https://wiki.eclipse.org/images/a/a0/Simple-war.war.zip">Simple-war.war.zip</ulink>) and web bundles using the install and start commands from the console.
-					<programlisting language="xml"><![CDATA[osgi> install webbundle:file:simple-war.war
-Bundle id is 40
-osgi> start 40]]></programlisting></para>
+					<programlisting language="xml"><![CDATA[osgi> install webbundle:file:simple-war.war?Web-ContextPath=/simple-war
+Bundle id is 43
+osgi> start 43]]></programlisting></para>
 			</listitem>
 			<listitem>
 				<para>

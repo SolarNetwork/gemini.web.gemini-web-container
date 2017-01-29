@@ -37,7 +37,8 @@ final class BundleDependenciesJarScanFilter implements JarScanFilter {
      */
     static final String SCANNER_SKIP_BUNDLES_PROPERTY_NAME = "org.eclipse.gemini.web.tomcat.scanner.skip.bundles";
 
-    private static final String SCANNER_SKIP_BUNDLES_PROPERTY_VALUE_DEFAULT = "org.eclipse.osgi,javax.servlet,javax.servlet.jsp,javax.el,javax.websocket";
+    private static final String SCANNER_SKIP_BUNDLES_PROPERTY_VALUE_DEFAULT =
+            "org.eclipse.osgi,javax.servlet,javax.servlet.jsp,javax.el,javax.websocket,javax.security.auth.message";
 
     private final Set<String> skipBundles;
 

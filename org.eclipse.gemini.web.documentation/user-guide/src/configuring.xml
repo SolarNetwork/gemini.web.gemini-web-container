@@ -14,7 +14,7 @@
 			If you do not want to use the default settings, you can provide the <literal>tomcat-server.xml</literal> file located in the <literal>$GW_HOME/config</literal> directory. 
 		</para>
 		<para>Here's an extract of the default configuration distributed with the @short.product.name@.</para>
-		<programlisting language="xml"><![CDATA[<?xml version='1.0' encoding='utf-8'?>
+		<programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <Server>
 
   <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
@@ -42,7 +42,7 @@
 		<section id="overview-tomcat-servlet-container">
 			<title>Description of the Default Apache Tomcat Configuration</title>
 			<para>
-				The following bullets describe the main elements and attributes in the default <literal>tomcat-server.xml</literal> file; for details about updating this file to further configure the embedded Apache Tomcat server, see the <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/config/index.html">Apache Tomcat Configuration Reference</ulink>.
+				The following bullets describe the main elements and attributes in the default <literal>tomcat-server.xml</literal> file; for details about updating this file to further configure the embedded Apache Tomcat server, see the <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/config/index.html">Apache Tomcat Configuration Reference</ulink>.
 			</para>
 			<tip>
 				<title>Relative paths</title>
@@ -86,8 +86,8 @@
 		<section id="configuring-tomcat-connectors">
 			<title>Connector Configuration</title>
 			<para>The @product.name@ supports the configuration of any connector supported by Apache Tomcat. 
-				See the default configuration above for syntax examples, and for further details of the configuration properties supported for various <literal>&lt;Connector&gt;</literal> implementations, consult the official <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/config/http.html">Apache Tomcat HTTP Connector</ulink> documentation.
-				For detailed instructions on how to configure Apache Tomcat's SSL support, consult the official <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/ssl-howto.html">Apache Tomcat SSL Configuration HOW-TO</ulink>.
+				See the default configuration above for syntax examples, and for further details of the configuration properties supported for various <literal>&lt;Connector&gt;</literal> implementations, consult the official <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/config/http.html">Apache Tomcat HTTP Connector</ulink> documentation.
+				For detailed instructions on how to configure Apache Tomcat's SSL support, consult the official <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/ssl-howto.html">Apache Tomcat SSL Configuration HOW-TO</ulink>.
 			</para>
 		</section>
 		<section id="configuring-tomcat-clustering">
@@ -95,7 +95,7 @@
 			<para>
 				@product.name@ supports standard Apache Tomcat cluster configuration.
 				By default, clustering of the embedded servlet container is disabled, and the default configuration does not include any clustering information.  
-				See <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/cluster-howto.html">Apache Tomcat Clustering/Session Replication HOW-TO</ulink> for detailed information about enabling and configuring clustering.
+				See <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/cluster-howto.html">Apache Tomcat Clustering/Session Replication HOW-TO</ulink> for detailed information about enabling and configuring clustering.
 			</para>
 		</section>
 		<section id="configuring-default-web-xml">
@@ -114,7 +114,7 @@
 			<para>
 				Here's an extract of the default configuration distributed with the @short.product.name@.
 			</para>
-			<programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="ISO-8859-1"?>
+			<programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
@@ -191,13 +191,13 @@
 							<listitem>
 								<para>
 									The default servlet serves static resources and processes the requests that are not mapped to any servlet.
-									For details about default servlet configuration, see the <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/default-servlet.html">Apache Tomcat Default Servlet Reference.</ulink>.
+									For details about default servlet configuration, see the <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/default-servlet.html">Apache Tomcat Default Servlet Reference.</ulink>.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
 									The jsp servlet serves the requests to JavaServer Pages. It is mapped to the URL pattern "*.jsp" and "*.jspx".
-									For details about jsp servlet configuration, see the <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/jasper-howto.html">Apache Tomcat Jasper 2 JSP Engine.</ulink>.
+									For details about jsp servlet configuration, see the <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/jasper-howto.html">Apache Tomcat Jasper 2 JSP Engine.</ulink>.
 								</para>
 							</listitem>
 						</itemizedlist>
@@ -231,8 +231,8 @@
 			<title>Context Configuration</title>
 			<para>
 				@product.name@ supports standard Apache Tomcat web application context configuration.
-				The <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/config/index.html">Apache Tomcat Configuration Reference</ulink> has a section on
-				<ulink url="http://tomcat.apache.org/tomcat-8.0-doc/config/context.html">The Context Container</ulink> which describes the mechanism that
+				The <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/config/index.html">Apache Tomcat Configuration Reference</ulink> has a section on
+				<ulink url="http://tomcat.apache.org/tomcat-8.5-doc/config/context.html">The Context Container</ulink> which describes the mechanism that
 				is used in @short.product.name@ for searching context configuration files and details the context configuration properties.
 			</para>
 			<para>
@@ -283,7 +283,7 @@
 			<title>JNDI Resources</title>
 			<para>
 				By default @product.name@ supports standard Apache Tomcat JNDI Resources handling.
-				The <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/jndi-resources-howto.html">Apache Tomcat JDNI Resources How-To</ulink>
+				The <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html">Apache Tomcat JDNI Resources How-To</ulink>
 				describes in details how the JNDI resources can be configured and used.
 			</para>
 			<para>
@@ -325,7 +325,7 @@
 				By default Apache Tomcat compiles JSP files in web applications against Java 1.7.
 				In order to enable JSP compilation against Java 1.8 for your web application,
 				additional init parameters (<literal>compilerSourceVM</literal> and <literal>compilerTargetVM</literal>) should be added for the <literal>org.apache.jasper.servlet.JspServlet</literal> configuration.
-				For details about <literal>org.apache.jasper.servlet.JspServlet</literal> configuration, see the <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/jasper-howto.html">Apache Tomcat Jasper 2 JSP Engine</ulink>.
+				For details about <literal>org.apache.jasper.servlet.JspServlet</literal> configuration, see the <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/jasper-howto.html">Apache Tomcat Jasper 2 JSP Engine</ulink>.
 				<literal>org.apache.jasper.servlet.JspServlet</literal> configuration can be provided with the web application's web.xml.
 			</para>
 			<programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="ISO-8859-1"?>
@@ -360,7 +360,7 @@
 		<section id="configuring-jar-scanner">
 			<title>Jar Scanner Configuration</title>
 			<para>
-				The standard <ulink url="http://tomcat.apache.org/tomcat-8.0-doc/config/jar-scanner.html">Jar Scanner</ulink> provided by Apache Tomcat is used to scan the web application for jar files containing configuration files - TLDs or web-fragment.xml files.
+				The standard <ulink url="http://tomcat.apache.org/tomcat-8.5-doc/config/jar-scanner.html">Jar Scanner</ulink> provided by Apache Tomcat is used to scan the web application for jar files containing configuration files - TLDs or web-fragment.xml files.
 				In addition to this functionality, @product.name@ provides Bundle Dependencies Jar Scanner. It is used to scan the web application bundle dependencies for such configuration files.
 				The bundles that are treated as web application bundle dependencies are:
 				<itemizedlist>
@@ -376,6 +376,7 @@
 					<listitem>javax.servlet.jsp</listitem>
 					<listitem>javax.el</listitem>
 					<listitem>javax.websocket</listitem>
+					<listitem>javax.security.auth.message</listitem>
 				</itemizedlist>
 				The default behavior can be changed with @product.name@ property <literal>org.eclipse.gemini.web.tomcat.scanner.skip.bundles</literal>.
 				The syntax is <literal>org.eclipse.gemini.web.tomcat.scanner.skip.bundles=&lt;bundle-symbolic-name&gt;,&lt;bundle-symbolic-name&gt;,...</literal>
