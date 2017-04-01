@@ -91,7 +91,7 @@ final class BundleWebResource extends AbstractResource {
         this.bundle = bundle;
         this.fragments = getFragments(bundle);
         this.checkEntryPath = checkEntryPath();
-        File bundleLocation = this.bundleFileResolver.resolve(bundle);
+        File bundleLocation = getBundleLocation();
         if (bundleLocation != null) {
             try {
                 this.bundleLocationCanonicalPath = bundleLocation.getCanonicalPath();
@@ -101,6 +101,25 @@ final class BundleWebResource extends AbstractResource {
                 this.isBundleLocationDirectory = true;
             }
         }
+    }
+
+    private File getBundleLocation() {
+        File bundleLocation = this.bundleFileResolver.resolve(bundle);
+        if (bundleLocation == null) {
+            URL root = this.bundle.getEntry("/");
+            try {
+                Object converter = ((BundleWebResourceRoot) this.root).getUrlConverterTracker().getService();
+                if (converter != null) {
+                    root = ((org.eclipse.osgi.service.urlconversion.URLConverter) converter).resolve(root);
+                }
+            } catch (Exception ignore) {
+            }
+
+            if (root != null && "file".equals(root.getProtocol())) {
+                bundleLocation = new File(root.getPath());
+            }
+        }
+        return bundleLocation;
     }
 
     private BundleWebResource(Bundle bundle, WebResourceRoot root, List<Bundle> fragments, String path, boolean checkEntryPath,

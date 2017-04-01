@@ -27,6 +27,7 @@ import org.apache.catalina.WebResource;
 import org.apache.catalina.WebResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 import org.osgi.framework.Bundle;
+import org.osgi.util.tracker.ServiceTracker;
 
 public class BundleWebResourceRoot extends StandardRoot {
 
@@ -34,10 +35,13 @@ public class BundleWebResourceRoot extends StandardRoot {
 
     private final WebResource main;
 
+    private final ServiceTracker<?, ?> urlConverterTracker;
+
     private Path docBase;
 
-    public BundleWebResourceRoot(Bundle bundle) {
+    public BundleWebResourceRoot(Bundle bundle, ServiceTracker<?, ?> urlConverterTracker) {
         this.bundle = bundle;
+        this.urlConverterTracker = urlConverterTracker;
         this.main = new BundleWebResource(this.bundle, this);
     }
 
@@ -92,6 +96,10 @@ public class BundleWebResourceRoot extends StandardRoot {
         keyProperties.append(getContext().getMBeanKeyProperties());
 
         return keyProperties.toString();
+    }
+
+    ServiceTracker<?, ?> getUrlConverterTracker() {
+        return this.urlConverterTracker;
     }
 
     @Override

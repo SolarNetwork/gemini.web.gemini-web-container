@@ -118,6 +118,8 @@ public final class OsgiAwareEmbeddedTomcat extends Tomcat {
 
     private final JarScanner defaultJarScanner;
 
+    private final ServiceTracker<?, ?> urlConverterTracker;
+
     private String hostConfigDir;
 
     OsgiAwareEmbeddedTomcat(BundleContext context, ServiceTracker<?, ?> urlConverterTracker) {
@@ -126,6 +128,7 @@ public final class OsgiAwareEmbeddedTomcat extends Tomcat {
             BundleFileResolverFactory.createBundleFileResolver(), context, urlConverterTracker);
         this.defaultJarScanner = new StandardJarScanner();
         this.jarScannerCustomizer = new DelegatingJarScannerCustomizer(context);
+        this.urlConverterTracker = urlConverterTracker;
     }
 
     /**
@@ -168,6 +171,10 @@ public final class OsgiAwareEmbeddedTomcat extends Tomcat {
     @Override
     public Engine getEngine() {
         return findEngine();
+    }
+
+    ServiceTracker<?, ?> getUrlConverterTracker() {
+        return this.urlConverterTracker;
     }
 
     private Engine findEngine() {

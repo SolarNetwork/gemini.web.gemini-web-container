@@ -91,6 +91,7 @@ public class BundleWebResourceTests {
         BundleRevision fbundleRevision = createMock(BundleRevision.class);
         BundleWiring fbundleWiring = createMock(BundleWiring.class);
         expect(bundle.getEntry("")).andReturn(Paths.get("src/test/resources/sub/").toUri().toURL()).anyTimes();
+        expect(bundle.getEntry("/")).andReturn(Paths.get("src/test/resources/sub/").toUri().toURL()).anyTimes();
         expect(bundle.getEntry("sub/")).andReturn(Paths.get("src/test/resources/sub/").toUri().toURL()).anyTimes();
         expect(bundle.getEntryPaths("")).andReturn(createPathsEnumeration("sub/"));
         expect(bundle.getEntryPaths("sub/")).andReturn(createPathsEnumeration("sub/one.txt"));
