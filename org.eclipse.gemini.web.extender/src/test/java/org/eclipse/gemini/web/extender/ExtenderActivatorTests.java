@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 SAP AG
+ * Copyright (c) 2012, 2017 SAP AG
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -75,24 +75,28 @@ public class ExtenderActivatorTests {
     public void testStartStopServiceExistsNoBundles() throws Exception {
         ServiceReference<?> serviceReference = createMock(ServiceReference.class);
         Bundle bundle = createMock(Bundle.class);
+        Bundle systemBundle = createMock(Bundle.class);
+        BundleContext systemBundleContext = createMock(BundleContext.class);
+        expect(this.bundleContext.getBundle(0)).andReturn(systemBundle);
+        expect(systemBundle.getBundleContext()).andReturn(systemBundleContext);
         expect(this.bundleContext.getServiceReferences(CLASS_NAME, null)).andReturn(new ServiceReference<?>[] { serviceReference });
         expect((WebContainer) this.bundleContext.getService(serviceReference)).andReturn(this.webContainer);
         expect(this.bundleContext.getBundle()).andReturn(bundle);
-        this.bundleContext.addBundleListener(isA(BundleListener.class));
+        systemBundleContext.addBundleListener(isA(BundleListener.class));
         expectLastCall();
-        expect(this.bundleContext.getBundles()).andReturn(null);
+        expect(systemBundleContext.getBundles()).andReturn(null);
         expect(serviceReference.getBundle()).andReturn(bundle);
         expect(bundle.getSymbolicName()).andReturn("");
-        this.bundleContext.removeBundleListener(isA(BundleListener.class));
+        systemBundleContext.removeBundleListener(isA(BundleListener.class));
         expectLastCall();
 
-        replay(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle);
+        replay(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle, systemBundle, systemBundleContext);
 
         ExtenderActivator extenderActivator = new ExtenderActivator();
         extenderActivator.start(this.bundleContext);
         extenderActivator.stop(this.bundleContext);
 
-        verify(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle);
+        verify(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle, systemBundle, systemBundleContext);
     }
 
     @Test
@@ -102,13 +106,17 @@ public class ExtenderActivatorTests {
         Bundle bundle1 = createMock(Bundle.class);
         Bundle bundle2 = createMock(Bundle.class);
         Bundle bundle3 = createMock(Bundle.class);
+        Bundle systemBundle = createMock(Bundle.class);
+        BundleContext systemBundleContext = createMock(BundleContext.class);
+        expect(this.bundleContext.getBundle(0)).andReturn(systemBundle);
+        expect(systemBundle.getBundleContext()).andReturn(systemBundleContext);
         WebApplication webApplication = createMock(WebApplication.class);
         expect(this.bundleContext.getServiceReferences(CLASS_NAME, null)).andReturn(new ServiceReference<?>[] { serviceReference });
         expect((WebContainer) this.bundleContext.getService(serviceReference)).andReturn(this.webContainer);
         expect(this.bundleContext.getBundle()).andReturn(bundle);
-        this.bundleContext.addBundleListener(isA(BundleListener.class));
+        systemBundleContext.addBundleListener(isA(BundleListener.class));
         expectLastCall();
-        expect(this.bundleContext.getBundles()).andReturn(new Bundle[] { bundle1, bundle2, bundle3 });
+        expect(systemBundleContext.getBundles()).andReturn(new Bundle[] { bundle1, bundle2, bundle3 });
         expect(serviceReference.getBundle()).andReturn(bundle);
         expect(bundle.getSymbolicName()).andReturn("");
         expect(bundle1.getState()).andReturn(Bundle.ACTIVE);
@@ -119,18 +127,20 @@ public class ExtenderActivatorTests {
         expect(this.webContainer.createWebApplication(bundle3, bundle)).andReturn(webApplication);
         webApplication.start();
         expectLastCall();
-        this.bundleContext.removeBundleListener(isA(BundleListener.class));
+        systemBundleContext.removeBundleListener(isA(BundleListener.class));
         expectLastCall();
         webApplication.stop();
         expectLastCall();
 
-        replay(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle, bundle1, bundle2, bundle3, webApplication);
+        replay(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle,
+                bundle1, bundle2, bundle3, systemBundle, systemBundleContext, webApplication);
 
         ExtenderActivator extenderActivator = new ExtenderActivator();
         extenderActivator.start(this.bundleContext);
         extenderActivator.stop(this.bundleContext);
 
-        verify(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle, bundle1, bundle2, bundle3, webApplication);
+        verify(this.filter, this.webContainer, this.bundleContext, serviceReference, bundle,
+                bundle1, bundle2, bundle3, systemBundle, systemBundleContext, webApplication);
     }
 
 }
