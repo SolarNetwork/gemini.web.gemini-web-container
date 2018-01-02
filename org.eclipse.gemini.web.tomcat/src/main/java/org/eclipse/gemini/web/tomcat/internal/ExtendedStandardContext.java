@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2015 SAP SE
+ * Copyright (c) 2014, 2018 SAP SE
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,13 +30,13 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
-class ExtendedStandardContext extends StandardContext {
+public class ExtendedStandardContext extends StandardContext {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ExtendedStandardContext.class);
 
     private final Bundle bundle;
 
-    ExtendedStandardContext(Bundle bundle) {
+    public ExtendedStandardContext(Bundle bundle) {
         super();
         this.bundle = bundle;
     }
