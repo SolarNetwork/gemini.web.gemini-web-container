@@ -12,7 +12,7 @@ org.junit=4.7.0
 # Compile
 org.eclipse.equinox.event=1.3.100.v20140115-1647
 org.eclipse.equinox.launcher=1.3.0.v20120308-1358
-org.eclipse.jdt=3.11.0.v20150602-1242
+org.eclipse.jdt=3.12.3.v20170228-1205
 org.eclipse.osgi=3.10.100.v20150529-1857
 org.eclipse.osgi.services=3.5.0.v20150519-2006
 org.eclipse.virgo.build.tools=1.4.1.RELEASE
