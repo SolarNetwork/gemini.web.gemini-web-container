@@ -115,4 +115,10 @@ final class BundleJarResourceSet extends JarResourceSet {
         }
     }
 
+    @Override
+    protected boolean isMultiRelease() {
+        // TODO how to replace JarFile.isMultiRelease (jdk9)
+        // we have URL and cannot get JarFile but JarInputStream
+        return false;
+    }
 }
