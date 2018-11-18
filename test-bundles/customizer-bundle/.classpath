@@ -3,9 +3,9 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.gemini.web.tomcat"/>
-	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.5.24/org.apache.tomcat.api-8.5.24.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.5.24/org.apache.tomcat.api.source-8.5.24.jar"/>
-	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.util.scan/8.5.24/org.apache.tomcat.util.scan-8.5.24.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.util.scan/8.5.24/org.apache.tomcat.util.scan.source-8.5.24.jar"/>
+	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.5.35/org.apache.tomcat.api-8.5.35.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.api/8.5.35/org.apache.tomcat.api.source-8.5.35.jar"/>
+	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.util.scan/8.5.35/org.apache.tomcat.util.scan-8.5.35.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.apache.tomcat.util.scan/8.5.35/org.apache.tomcat.util.scan.source-8.5.35.jar"/>
 	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/org.eclipse.osgi/3.10.0.v20140606-1445/org.eclipse.osgi-3.10.0.v20140606-1445.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/org.eclipse.osgi/3.10.0.v20140606-1445/org.eclipse.osgi.source-3.10.0.v20140606-1445.jar"/>
-	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0.20180121/javax.servlet-3.1.0.20180121.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0.20180121/javax.servlet-sources-3.1.0.20180121.jar"/>
+	<classpathentry kind="var" path="IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0.20180730/javax.servlet-3.1.0.20180730.jar" sourcepath="/IVY_CACHE/org.eclipse.virgo.mirrored/javax.servlet/3.1.0.20180730/javax.servlet-sources-3.1.0.20180730.jar"/>
 	<classpathentry kind="output" path="target"/>
 </classpath>

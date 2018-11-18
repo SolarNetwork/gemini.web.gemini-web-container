@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2016 VMware Inc.
+ * Copyright (c) 2009, 2018 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -541,8 +541,9 @@ public class TomcatServletContainerTests {
         try {
             validateURLExpectedContent("http://localhost:8080/war-with-resource-references/Bug52792Servlet",
                 "Name [unknown-resource] is not bound in this Context. Unable to find [unknown-resource].");
-            validateURLExpectedContent("http://localhost:8080/war-with-resource-references/Bug52974Servlet", new String[] {
-                "@Resource injection - field: resource", "@Resource injection - method: resource1" });
+            // https://bugs.eclipse.org/bugs/show_bug.cgi?id=541285
+            //validateURLExpectedContent("http://localhost:8080/war-with-resource-references/Bug52974Servlet", new String[] {
+            //    "@Resource injection - field: resource", "@Resource injection - method: resource1" });
             validateURLExpectedContent("http://localhost:8080/war-with-resource-references/Bug53180Servlet", "Resource: resource");
             validateURLExpectedContent("http://localhost:8080/war-with-resource-references/Bug53333Servlet", new String[] { "resource1: 1",
                 "resource2: 2" });
