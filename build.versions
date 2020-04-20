@@ -1,6 +1,6 @@
 # Test
 
-org.eclipse.virgo.test=3.7.0.BUILD-20150104200311
+org.eclipse.virgo.test=3.7.0.M01
 
 #CQ4131
 org.easymock=2.3.0
@@ -46,8 +46,8 @@ javax.xml.soap=1.3.0.v201105210645
 #CQ4111
 org.apache.taglibs=1.1.2.v20110518
 
-#CQ18132
-org.apache.catalina=8.5.35
+#CQ21807
+org.apache.catalina=8.5.53
 #CQ16946
 javax.el=3.0.0.20180730
 javax.security.auth.message=1.1.0.20180730

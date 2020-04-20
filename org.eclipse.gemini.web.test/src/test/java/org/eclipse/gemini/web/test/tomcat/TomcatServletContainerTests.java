@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2018 VMware Inc.
+ * Copyright (c) 2009, 2020 VMware Inc.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -575,7 +575,7 @@ public class TomcatServletContainerTests {
 
         Object[] result = startWebApplicationWith(LOCATION_WAR_WITH_TLD, "/war-with-tld");
         try {
-            validateURLExpectedContent("http://localhost:8080/war-with-tld", new String[] { "test.jsp", "0.2 kb" });
+            validateURLExpectedContent("http://localhost:8080/war-with-tld", new String[] { "test.jsp", "0.3 kb" });
         } finally {
             this.container.stopWebApplication((WebApplicationHandle) result[1]);
             ((Bundle) result[0]).uninstall();
