@@ -575,7 +575,7 @@ public class TomcatServletContainerTests {
 
         Object[] result = startWebApplicationWith(LOCATION_WAR_WITH_TLD, "/war-with-tld");
         try {
-            validateURLExpectedContent("http://localhost:8080/war-with-tld", new String[] { "test.jsp", "0.3 kb" });
+            validateURLExpectedContent("http://localhost:8080/war-with-tld", new String[] { "test.jsp", "0.2 kb" });
         } finally {
             this.container.stopWebApplication((WebApplicationHandle) result[1]);
             ((Bundle) result[0]).uninstall();

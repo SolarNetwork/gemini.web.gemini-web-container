@@ -46,14 +46,14 @@ javax.xml.soap=1.3.0.v201105210645
 #CQ4111
 org.apache.taglibs=1.1.2.v20110518
 
-#CQ21807
-org.apache.catalina=8.5.53
-#CQ16946
-javax.el=3.0.0.20180730
-javax.security.auth.message=1.1.0.20180730
-javax.servlet=3.1.0.20180730
-javax.servlet.jsp=2.3.0.20180730
-javax.websocket=1.1.0.20180730
+#CQ22255
+org.apache.catalina=8.5.56
+#CQ22255
+javax.el=3.0.0.20200621
+javax.security.auth.message=1.1.0.20200621
+javax.servlet=3.1.0.20200621
+javax.servlet.jsp=2.3.0.20200621
+javax.websocket=1.1.0.20200621
 
 #CQ6925
 org.slf4j.api=1.7.2.v20121108-1250
